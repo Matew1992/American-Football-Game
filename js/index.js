@@ -11,10 +11,10 @@ document.addEventListener("keydown", (e) => {
 });
 
 function preload() {
-  background = loadImage('/assets/images/aff.png');
-  player1 = loadImage('/assets/images/player1.gif');
-  touchDownSound = loadSound('');
-  gameOverSound = loadSound('');
+  background = loadImage("/assets/images/aff.png");
+  player1 = loadImage("/assets/images/player1.gif");
+  touchDownSound = loadSound("");
+  gameOverSound = loadSound("");
 }
 
 function setup() {
