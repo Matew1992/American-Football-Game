@@ -14,27 +14,26 @@ window.onload = () => {
   document.getElementById("restart-button").onclick = () => {
     gameOver.style.display = "none";
     player = { x: 600, y: 380, w: 60, h: 70 };
+    Opponent = { x: 600, y: 380, w: 60, h: 70 };
     startGame();
   };
 
 function startGame() {
   let mainScreen = document.getElementById("main-menu");
   mainScreen.style.display = "none";
-  loop();
-  canvas.show();
  }
 }
 
 function preload() {
   backgroundImage = loadImage('/assets/images/aff.png');
-  Player = loadImage('/assets/images/player1.gif');
+  player = loadImage('/assets/images/player1.gif');
   Opponent = loadImage('/assets/images/opponent1.gif')
   touchDownSound = loadSound('');
   gameOverSound = loadSound('');
 }
 
 function setup() {
-  createCanvas(500, 700);
+  createCanvas(450, 700);
   currentGame = new Game();
   noLoop();
 }
