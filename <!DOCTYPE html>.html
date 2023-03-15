@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.min.js" integrity="sha512-zG16Kg/mV7i98n5k5NlvQcztdOXaZV7aWl/HvNGV7C4q3yKm4mBkpeAQxh7Sg6mZU6jD5ryHvID9vc+p08sJfQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="styles/style.css" />
+    <title>NFL TOUCHDOWN!</title>
+  </head>
+  <body>
+    <h1>NFL Touchdown</h1>
+    <div class="game-intro">
+      <img src="assets/images/png-transparent-nfl-logo-nfl-national-football-league-playoffs-united-states-washington-redskins-oakland-raiders-nfl-text-sport-team-thumbnail.png" alt="" class="logo-img" />
+      <p>Run, avoid opponents players, and score a touchdown!! become the new NFL champion!</p>
+      <br/>
+
+      <button  id= "startGame" onclick= "startGame()"> Start Game </button>
+      
+      <p>Use the left and right arrow to control the player!</p>
+      <img src="assets/images/png-transparent-nfl-philadelphia-eagles-american-football-nfl-sport-sports-nfl-thumbnail.png" alt="" class="arrows-img" />
+    </div>
+    <div id="game-over">
+      <p>SO BAD!!<br>
+          you got tackled by an oponent player!!<br>
+          GAME OVER <br><br>
+          Your score: <span id="score">0</span>
+      </p>
+      <button id="retry-button">Retry</button>
+      <script type="text/javascript" src="js/game.js"></script>
+      <script type="text/javascript" src="js/player1.js"></script>
+      <script type="text/javascript" src="js/opponent1.js"></script>
+      <script type="text/javascript" src="js/index.js"></script>
+  </body>
+</html>

@@ -1,0 +1,51 @@
+body {
+    padding: 0;
+    text-align: center;
+    background-color: rgb(230, 229, 205);
+    font-family: "Verdana";
+    font-style: italic;
+  }
+
+  .game-intro {
+    float: left;
+    padding: 0% 10%;
+  }
+  
+  .game-intro p {
+    font-size: 16px;
+    font-family: "Verdana";
+    background-position: center;
+    text-align: center;
+  }
+  
+  h1 {
+    color: rgb(70, 26, 201);
+    text-shadow: 3px 3px rgb(86	51	39	);
+    text-align: center;
+    margin-bottom: 0;
+}
+
+  .logo-img {
+    width: 350px;
+  }
+  
+  .arrows-img {
+    width: 200px;
+  }
+  
+  body button {
+    font-size: 30px;
+    background-color: #df0e18;
+    color: #fff;
+    padding: 20px 40px;
+    border: 0;
+    box-shadow: 0;
+    border-radius: 5px;
+    margin-bottom: 20px;
+  }
+  
+  #game-board {
+      float: left;
+      padding: 20px 0px;
+  }
+  

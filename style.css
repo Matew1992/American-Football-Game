@@ -1,0 +1,98 @@
+#game-window {
+	position: relative;
+	width: 800px;
+	height: 600px;
+	background-color: green;
+}
+
+.player {
+	position: absolute;
+	width: 50px;
+	height: 50px;
+	background-color: blue;
+}
+
+.obstacle {
+	position: absolute;
+	width: 50px;
+	height: 50px;
+	background-color: red;
+}
+
+.touchdown {
+	position: absolute;
+	width: 50px;
+	height: 50px;
+	background-color: yellow;
+}
+
+.score {
+	position: absolute;
+	top: 20px;
+	right: 20px;
+	font-size: 30px;
+	color: white;
+}
+
+.yard-line {
+	position: absolute;
+	width: 2px;
+	height: 50px;
+	background-color: white;
+}
+
+.yard-line:nth-child(10n+1) {
+	top: 0;
+	bottom: 0;
+	left: calc(50% - 1px);
+}
+
+/* Animation for yard lines */
+.yard-line {
+	animation: line-animation 5s linear infinite;
+}
+
+@keyframes line-animation {
+	from {
+		left: -2px;
+	}
+	to {
+		left: calc(50% - 1px);
+	}
+}
+
+.goalpost {
+	position: absolute;
+	top: 10px;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 10px;
+	height: 200px;
+	background-color: white;
+}
+
+.goalpost::before {
+	content: '';
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -10px;
+	width: 30px;
+	height: 10px;
+	background-color: white;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+}
+
+.goalpost::after {
+	content: '';
+	display: block;
+	position: absolute;
+	bottom: 0;
+	left: -10px;
+	width: 30px;
+	height: 10px;
+	background-color: white;
+	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
+}
