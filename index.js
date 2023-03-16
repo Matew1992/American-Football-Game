@@ -17,9 +17,13 @@ let healthBar = 50;
 let highScoreArr = [0];
 let highScore = 0;
 let gameOver;
+let introSound;
+let inGameSound;
+let gameOverSound;
+let width = window.innerWidth;
+let height =  window.innerHeight;
 
 window.onload = () => {
-
 };
 
 function startGame() {
@@ -35,7 +39,7 @@ function startGame() {
     { img: opponent4, y: random(80, 500), x: width - 70, w: 50, h: 50 },
   ];
   loop();
-  inPlayMusic.play();
+  inGameSound.play();
   Music.loop();
 }
 
@@ -47,13 +51,14 @@ function preload() {
   opponent3 = loadImage("/assets/images/opponent3.gif");
   opponent4 = loadImage("/assets/images/opponent4.gif");
   Opponent = loadImage("/assets/images/opponent1.gif");
-  touchDownSound = loadSound("");
-  gameOverSound = loadSound("");
+  introSound = loadSound("/assets/sounds/introSound.wav")
+  inGameSound = loadSound("/assets/sounds/inGameSound.wav");
+  gameOverSound = loadSound("/assets/sounds/GameOverSound.wav");
 }
 
 function setup() {
   noLoop();
-  canvas = createCanvas(900, 700);
+  canvas = createCanvas(width, height);
   canvas.hide();
   document.getElementById("start-button").onclick = () => {
     startGame();
@@ -81,7 +86,7 @@ function collideOpponents() {
 }
 
 function draw() {
-  image(backgroundImage, 0, 0, 900, 700);
+  image(backgroundImage, 0, 0, width, height);
   image(player.img, player.x, player.y, 50, 50);
   textSize(20);
   fill(0, 200, 0);

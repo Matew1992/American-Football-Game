@@ -11,6 +11,12 @@ body {
     padding: 0% 10%;
   }
   
+  canvas {
+
+    display: block;
+  
+  }
+  
   .game-intro p {
     font-size: 20px;
     font-family: "Verdana";
