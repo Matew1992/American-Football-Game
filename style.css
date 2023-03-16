@@ -33,6 +33,9 @@ body {
     width: 200px;
   }
   
+  #game-over {
+    display: none;
+  }
 
   body button {
     font-size: 30px;
