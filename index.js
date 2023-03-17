@@ -13,10 +13,9 @@ let opponent2;
 let opponent3;
 let opponent4;
 let opponentsArray = [];
-let healthBar = 50;
+let healthBar = 100;
 let highScoreArr = [0];
 let highScore = 0;
-let gameOver;
 let introSound;
 let inGameSound;
 let gameOverSound;
@@ -24,23 +23,26 @@ let width = window.innerWidth;
 let height =  window.innerHeight;
 
 window.onload = () => {
-};
+  introSound.play();
+  }
 
 function startGame() {
+  player.x = 20;
+  introSound.stop()
   let mainScreen = document.getElementById("game-intro");
   mainScreen.style.display = "none";
   let nflTitle = document.getElementById("title-NFL");
   nflTitle.style.display = "none"
   canvas.show();
   opponentsArray = [
-    { img: opponent1, y: random(80, 500), x: width - 70, w: 50, h: 50 },
-    { img: opponent2, y: random(80, 500), x: width - 70, w: 50, h: 50 },
-    { img: opponent3, y: random(80, 500), x: width - 70, w: 50, h: 50 },
-    { img: opponent4, y: random(80, 500), x: width - 70, w: 50, h: 50 },
+    { img: opponent1, y: random(80, 900), x: width - 70, w: 50, h: 50 },
+    { img: opponent2, y: random(80, 900), x: width - 70, w: 50, h: 50 },
+    { img: opponent3, y: random(80, 900), x: width - 70, w: 50, h: 50 },
+    { img: opponent4, y: random(80, 900), x: width - 70, w: 50, h: 50 },
   ];
   loop();
   inGameSound.play();
-  Music.loop();
+  inGameSound.loop();
 }
 
 function preload() {
@@ -50,10 +52,10 @@ function preload() {
   opponent2 = loadImage("/assets/images/opponent2.gif");
   opponent3 = loadImage("/assets/images/opponent3.gif");
   opponent4 = loadImage("/assets/images/opponent4.gif");
-  Opponent = loadImage("/assets/images/opponent1.gif");
-  introSound = loadSound("/assets/sounds/introSound.wav")
-  inGameSound = loadSound("/assets/sounds/inGameSound.wav");
-  gameOverSound = loadSound("/assets/sounds/GameOverSound.wav");
+  // Opponent = loadImage("/assets/images/opponent1.gif");
+  introSound = createAudio("/assets/sounds/introSound.wav")
+  inGameSound = createAudio("/assets/sounds/inGameSound.wav");
+  gameOverSound = createAudio("/assets/sounds/GameOverSound.wav");
 }
 
 function setup() {
@@ -72,16 +74,24 @@ function setup() {
 
 function collideOpponents() {
   for (let i = 0; i < opponentsArray.length; i++) {
+    opponentsArray[i].y +=5;
     if (
       player.x < opponentsArray[i].x + opponentsArray[i].w &&
       player.x + player.w > opponentsArray[i].x &&
       player.y < opponentsArray[i].y + opponentsArray[i].h &&
       player.y + player.h > opponentsArray[i].y
-    ) {
-      opponentssArray[i].y = -20;
-      opponentsArray[i].x = random(80, 50);
-      return true;
-    }
+    );
+  }
+  healthBar -= 0.1;
+  return false;
+}
+
+function touchDown(){
+  if(player.x > 900) {
+     score++;
+     opponentsArray = [];
+     player.x = 0;
+     healthBar += 30;
   }
 }
 
@@ -96,7 +106,10 @@ function draw() {
   fill(0, 200, 0);
   rect(20, 20, healthBar, 20);
   if (frameCount % 120 === 0) {
-    opponentsArray.push({ img: opponent1, y: random(80, 500), x: width - 70, w: 50, h: 50 });
+    opponentsArray.push({ img: opponent1, y: random(80, 900), x: width - 70, w: 50, h: 50 });
+    opponentsArray.push({ img: opponent2, y: random(80, 900), x: width - 70, w: 50, h: 50 });
+    opponentsArray.push({ img: opponent3, y: random(80, 900), x: width - 70, w: 50, h: 50 });
+    opponentsArray.push({ img: opponent4, y: random(80, 900), x: width - 70, w: 50, h: 50 });
   }
   for (let i = opponentsArray.length - 1; i > 0; i--) {
     image(
@@ -107,7 +120,7 @@ function draw() {
       opponentsArray[i].h
     );
     opponentsArray[i].x -=2;
-    if (opponentsArray[i].x < 0) {
+    if (opponentsArray[i].x < 1) {
       opponentsArray.splice
     }
   }
@@ -149,4 +162,17 @@ function keyReleased() {
   playerGoingRight = false;
   playerGoingDown = false;
   playerGoingUp = false;
+}
+
+function gameOver() {
+  inGameSound.stop();
+  gameOverSound.play();
+  let gameOverScreen = document.getElementById("game-over");
+  gameOverScreen.style.display = "none";
+  document.getElementById("restart-button").onclick = () => {
+    gameOver.style.display = "none";
+  };
+  if (healthBar <= 0 || collideOpponents() == true){
+    gameOverSound.play()
+  };
 }
