@@ -4,7 +4,6 @@
 // let opponentSpawnBuffer;
 // let opponentSpawnDifficulty;
 let backgroundImage;
-let canvas;
 let player = { x: 500, y: 300, w: 50, h: 50 };
 let playerGoingLeft = false;
 let playerGoingRight = false;
@@ -62,13 +61,6 @@ function startGame() {
   loop();
   inGameSound.play();
   inGameSound.loop();
-}
-
-function restartGame() {
-}
-
-function retryGame() {
-
 }
 
 function preload() {
@@ -235,8 +227,6 @@ function draw() {
   touchDown();
   matchPoint();
   gameOver();
-  restartGame();
-  retryGame();
   if (playerGoingRight) {
     player.x += 4;
   }
