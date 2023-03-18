@@ -120,19 +120,6 @@ function collideOpponents() {
 }
 
 function touchDown() {
-  for (let i = opponentsArray.length - 1; i > 0; i--) {
-    image(
-      opponentsArray[i].img,
-      opponentsArray[i].x,
-      opponentsArray[i].y,
-      opponentsArray[i].w,
-      opponentsArray[i].h
-    );
-    opponentsArray[i].x -= 1; // higher the number the faster they come
-    if (opponentsArray[i].x < 1) {
-      opponentsArray.splice;
-    }
-  }
   if (player.x >= 2600) {
     woohSound.play();
     score++;
