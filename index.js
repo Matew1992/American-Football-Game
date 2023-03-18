@@ -1,8 +1,8 @@
-// let currentGame;
-let opponentSpawnBuffer;
-let opponentSpawnDifficulty;
 // const restartButton = document.getElementById('restart-button');
 // const retryButton = document.getElementById('start-button');
+// let highScoreArr = [0];
+// let opponentSpawnBuffer;
+// let opponentSpawnDifficulty;
 let backgroundImage;
 let canvas;
 let player = { x: 500, y: 300, w: 50, h: 50 };
@@ -14,9 +14,9 @@ let opponent1;
 let opponent2;
 let opponent3;
 let opponent4;
+let enemiesSpeed = 5;
 let opponentsArray = [];
 let healthBar = 100;
-// let highScoreArr = [0];
 let score = 0;
 let introSound;
 let inGameSound;
@@ -41,6 +41,7 @@ window.onload = () => {
 function startGame() {
   // opponentSpawnBuffer =0;
   // opponentSpawnDifficulty=10;
+  healthBar = 100;
   player.x = 30;
   player.y = height/2;
   introSound.stop();
@@ -93,6 +94,7 @@ function preload() {
   gameOverSound = createAudio("/assets/sounds/GameOverSound.wav");
   collisionSound = createAudio("/assets/sounds/collisionSound.wav");
   matchpointSound = createAudio("/assets/sounds/matchpointSound.wav");
+  woohSound = createAudio("/assets/sounds/wooh.wav");
 }
 
 function setup() {
@@ -103,8 +105,9 @@ function setup() {
     startGame();
   };
   document.getElementById("restart-button").onclick = () => {
-    gameOver.style.display = "none";
+    gameOverScreen.style.display = "none";
     startGame();
+    console.log('hello')
  }
 } 
 
@@ -116,7 +119,7 @@ function collideOpponents() {
       player.y < opponentsArray[i].y + opponentsArray[i].h &&
       player.y + player.h > opponentsArray[i].y
     ) {
-      healthBar -= 0.3; // set to 0.3
+      healthBar -= 2; // set to 0.3, the higher, the more they hurt
       collisionSound.play();
       return true;
     }
@@ -124,23 +127,23 @@ function collideOpponents() {
 }
 
 function touchDown() {
-  // for (let i = opponentsArray.length - 1; i > 0; i--) {
-  //   image(
-  //     opponentsArray[i].img,
-  //     opponentsArray[i].x,
-  //     opponentsArray[i].y,
-  //     opponentsArray[i].w,
-  //     opponentsArray[i].h
-  //   );
-  //   opponentsArray[i].x -= 1; // higher the number the faster they come
-  //   if (opponentsArray[i].x < 1) {
-  //     opponentsArray.splice;
-  //   }
-  // }
+  for (let i = opponentsArray.length - 1; i > 0; i--) {
+    image(
+      opponentsArray[i].img,
+      opponentsArray[i].x,
+      opponentsArray[i].y,
+      opponentsArray[i].w,
+      opponentsArray[i].h
+    );
+    opponentsArray[i].x -= 1; // higher the number the faster they come
+    if (opponentsArray[i].x < 1) {
+      opponentsArray.splice;
+    }
+  }
   if (player.x >= 2600) {
-    // (woohSound.play())
+    woohSound.play()
     score++;
-    // opponentsArray[i].x how to increase difficulty in case? 
+    enemiesSpeed = enemiesSpeed + 2;
     opponentsArray = [];
     player.x = 0;
     healthBar += 1; //set to 1 if the game will get harder
@@ -170,7 +173,7 @@ function keyReleased() {
 }
 
 function matchPoint() {
-  if (score >= 1 ) { //set this to 5 points
+  if (score >= 3 ) { //set this to 5 points
     canvas.hide();
     noLoop();
     gameWinnerScreen.style.display = "block";
@@ -241,7 +244,7 @@ function draw() {
       opponentsArray[i].w,
       opponentsArray[i].h
     );
-    opponentsArray[i].x -= 1; // higher the number the faster they come
+    opponentsArray[i].x -= enemiesSpeed; // higher the number the faster they come
     if (opponentsArray[i].x < 1) {
       opponentsArray.splice;
     }
