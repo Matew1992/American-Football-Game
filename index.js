@@ -72,18 +72,18 @@ function retryGame() {
 }
 
 function preload() {
-  backgroundImage = loadImage("/assets/images/aff.png");
-  player.img = loadImage("/assets/images/player1.gif");
-  opponent1 = loadImage("/assets/images/opponent1.gif");
-  opponent2 = loadImage("/assets/images/opponent2.gif");
-  opponent3 = loadImage("/assets/images/opponent3.gif");
-  opponent4 = loadImage("/assets/images/opponent4.gif");
-  introSound = createAudio("/assets/sounds/introSound.wav");
-  inGameSound = createAudio("/assets/sounds/inGameSound.wav");
-  gameOverSound = createAudio("/assets/sounds/GameOverSound.wav");
-  collisionSound = createAudio("/assets/sounds/collisionSound.wav");
-  matchpointSound = createAudio("/assets/sounds/matchpointSound.wav");
-  woohSound = createAudio("/assets/sounds/wooh.wav")
+  backgroundImage = loadImage("assets/images/aff.png");
+  player.img = loadImage("assets/images/player1.gif");
+  opponent1 = loadImage("assets/images/opponent1.gif");
+  opponent2 = loadImage("assets/images/opponent2.gif");
+  opponent3 = loadImage("assets/images/opponent3.gif");
+  opponent4 = loadImage("assets/images/opponent4.gif");
+  introSound = createAudio("assets/sounds/introSound.wav");
+  inGameSound = createAudio("assets/sounds/inGameSound.wav");
+  gameOverSound = createAudio("assets/sounds/GameOverSound.wav");
+  collisionSound = createAudio("assets/sounds/collisionSound.wav");
+  matchpointSound = createAudio("assets/sounds/matchpointSound.wav");
+  woohSound = createAudio("assets/sounds/wooh.wav")
 }
 
 function setup() {
