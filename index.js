@@ -14,7 +14,7 @@ let opponent1;
 let opponent2;
 let opponent3;
 let opponent4;
-let enemiesSpeed = 5;
+let opponentsSpeed = 5;
 let opponentsArray = [];
 let healthBar = 100;
 let score = 0;
@@ -42,6 +42,7 @@ function startGame() {
   // opponentSpawnBuffer =0;
   // opponentSpawnDifficulty=10;
   healthBar = 100;
+  score = 0;
   player.x = 30;
   player.y = height/2;
   introSound.stop();
@@ -49,6 +50,8 @@ function startGame() {
   mainScreen.style.display = "none";
   let nflTitle = document.getElementById("title-NFL");
   nflTitle.style.display = "none";
+  let gameWinnerScreen = document.getElementById("game-winner");
+  gameWinnerScreen.style.display = "none";
   canvas.show();
   opponentsArray = [
     { img: opponent1, y: random(80, 900), x: width -50, w: 50, h: 50 },
@@ -62,24 +65,10 @@ function startGame() {
 }
 
 function restartGame() {
-  // document.getElementById("restart-button").onclick = () => {
-  //   startGame();
-  // };
-  // player.x = 30;
-  // player.y = height/2;
-  // introSound.stop();
-  // let mainScreen = document.getElementById("game-intro");
-  // mainScreen.style.display = "none";
-  // let nflTitle = document.getElementById("title-NFL");
-  // nflTitle.style.display = "none";
-  // canvas.show();
-  // opponentsArray = [
-  //   { img: opponent1, y: random(80, 500), x: width - 70, w: 50, h: 50 },
-  //   { img: opponent2, y: random(80, 500), x: width - 70, w: 50, h: 50 },
-  //   { img: opponent3, y: random(80, 500), x: width - 70, w: 50, h: 50 },
-  //   { img: opponent4, y: random(80, 500), x: width - 70, w: 50, h: 50 },
-  // ];
-  // Loop();
+}
+
+function retryGame() {
+
 }
 
 function preload() {
@@ -94,7 +83,7 @@ function preload() {
   gameOverSound = createAudio("/assets/sounds/GameOverSound.wav");
   collisionSound = createAudio("/assets/sounds/collisionSound.wav");
   matchpointSound = createAudio("/assets/sounds/matchpointSound.wav");
-  woohSound = createAudio("/assets/sounds/wooh.wav");
+  woohSound = createAudio("/assets/sounds/wooh.wav")
 }
 
 function setup() {
@@ -107,8 +96,12 @@ function setup() {
   document.getElementById("restart-button").onclick = () => {
     gameOverScreen.style.display = "none";
     startGame();
-    console.log('hello')
  }
+ document.getElementById("retry-button").onclick = () => {
+  gameWinnerScreen.style.display = "none";
+  console.log(gameWinnerScreen);
+  startGame();
+}
 } 
 
 function collideOpponents() {
@@ -141,9 +134,9 @@ function touchDown() {
     }
   }
   if (player.x >= 2600) {
-    woohSound.play()
+    woohSound.play();
     score++;
-    enemiesSpeed = enemiesSpeed + 2;
+    opponentsSpeed = opponentsSpeed + 2;
     opponentsArray = [];
     player.x = 0;
     healthBar += 1; //set to 1 if the game will get harder
@@ -173,7 +166,7 @@ function keyReleased() {
 }
 
 function matchPoint() {
-  if (score >= 3 ) { //set this to 5 points
+  if (score >= 5 ) { //set this to 5 points
     canvas.hide();
     noLoop();
     gameWinnerScreen.style.display = "block";
@@ -244,7 +237,7 @@ function draw() {
       opponentsArray[i].w,
       opponentsArray[i].h
     );
-    opponentsArray[i].x -= enemiesSpeed; // higher the number the faster they come
+    opponentsArray[i].x -= opponentsSpeed; // higher the number the faster they come
     if (opponentsArray[i].x < 1) {
       opponentsArray.splice;
     }
@@ -256,6 +249,7 @@ function draw() {
   matchPoint();
   gameOver();
   restartGame();
+  retryGame();
   if (playerGoingRight) {
     player.x += 4;
   }
