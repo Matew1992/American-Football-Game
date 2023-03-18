@@ -39,9 +39,9 @@ body {
     width: 200px;
   }
   
-  #game-over {
+  /* #game-over {
     display: none;
-  }
+  } */
 
   body button {
     font-size: 30px;

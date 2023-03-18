@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>NFL TOUCHDOWN!!</title>
+  </head>
+  <body>
+    <h1 id="title-NFL">NFL TOUCHDOWN</h1>
+    <br>
+    <div id="game-intro">
+      <img
+        src="assets/images/png-transparent-nfl-logo-nfl-national-football-league-playoffs-united-states-washington-redskins-oakland-raiders-nfl-text-sport-team-thumbnail.png"
+        alt=""
+        class="logo-img"/>
+        <br>
+      <p>
+        Run, avoid opponent players, and score a touchdown!! become the new NFL
+        champion!
+      </p>
+      <div id="main-menu"></div>
+      <br>
+      <button id="start-button">Start</button>
+      <br>
+      <p>Use the left, right, up and down arrow to control the player! Be sure to score 5 points before getting injured and lose the game</p>
+      <br>
+      <img src="assets/images/png-transparent-nfl-philadelphia-eagles-american-football-nfl-sport-sports-nfl-thumbnail.png"
+      />
+    </div>
+    <div id="game-over">
+      <img src="assets/images/gameOver.jpg" />
+      <br>
+      <button id="restart-button">Try Again</button>
+      <p id="highscore"></p>
+      <p>
+        SO BAD!!<br />
+        you got tackled by an opponent player!!<br />
+        GAME OVER <br /><br />
+        Your score: <span id="score">0</span>
+      </p>
+    </div>
+    <div id="game-winner">
+      <img src="assets/images/trophy.jpeg">
+        <p>Congratulations!! You are the new NFL Champion!!</p>
+        <br>
+        <button id="retry-button">Retry</button>
+    </div>
+    <script src="p5-sound.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.6.0/lib/p5.js"></script>
+    <script src="index.js"></script>
+  </body>
+</html>
+

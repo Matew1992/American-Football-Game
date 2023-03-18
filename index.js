@@ -1,9 +1,11 @@
-let currentGame;
+// let currentGame;
 let opponentSpawnBuffer;
 let opponentSpawnDifficulty;
+// const restartButton = document.getElementById('restart-button');
+// const retryButton = document.getElementById('start-button');
 let backgroundImage;
 let canvas;
-let player = { x: 600, y: 380, w: 60, h: 70 };
+let player = { x: 500, y: 300, w: 50, h: 50 };
 let playerGoingLeft = false;
 let playerGoingRight = false;
 let playerGoingUp = false;
@@ -14,35 +16,69 @@ let opponent3;
 let opponent4;
 let opponentsArray = [];
 let healthBar = 100;
-let highScoreArr = [0];
-let highScore = 0;
+// let highScoreArr = [0];
+let score = 0;
 let introSound;
 let inGameSound;
 let gameOverSound;
+let collisionSound;
+let matchpointSound;
+let woohSound;
 let width = window.innerWidth;
-let height =  window.innerHeight;
+let height = window.innerHeight;
+let gameOverScreen = document.querySelector("#game-over");
+let gameWinnerScreen = document.querySelector("#game-winner");
 
 window.onload = () => {
   introSound.play();
-  }
+  gameOverScreen.style.display = "none";
+  gameWinnerScreen.style.display = "none";
+  document.getElementById("start-button").onclick = () => {
+    startGame();
+  };
+};
 
 function startGame() {
-  player.x = 20;
-  introSound.stop()
+  // opponentSpawnBuffer =0;
+  // opponentSpawnDifficulty=10;
+  player.x = 30;
+  player.y = height/2;
+  introSound.stop();
   let mainScreen = document.getElementById("game-intro");
   mainScreen.style.display = "none";
   let nflTitle = document.getElementById("title-NFL");
-  nflTitle.style.display = "none"
+  nflTitle.style.display = "none";
   canvas.show();
   opponentsArray = [
-    { img: opponent1, y: random(80, 900), x: width - 70, w: 50, h: 50 },
-    { img: opponent2, y: random(80, 900), x: width - 70, w: 50, h: 50 },
-    { img: opponent3, y: random(80, 900), x: width - 70, w: 50, h: 50 },
-    { img: opponent4, y: random(80, 900), x: width - 70, w: 50, h: 50 },
+    { img: opponent1, y: random(80, 900), x: width -50, w: 50, h: 50 },
+    { img: opponent2, y: random(80, 900), x: width -50, w: 50, h: 50 },
+    { img: opponent3, y: random(80, 900), x: width -50, w: 50, h: 50 },
+    { img: opponent4, y: random(80, 900), x: width -50, w: 50, h: 50 },
   ];
   loop();
   inGameSound.play();
   inGameSound.loop();
+}
+
+function restartGame() {
+  // document.getElementById("restart-button").onclick = () => {
+  //   startGame();
+  // };
+  // player.x = 30;
+  // player.y = height/2;
+  // introSound.stop();
+  // let mainScreen = document.getElementById("game-intro");
+  // mainScreen.style.display = "none";
+  // let nflTitle = document.getElementById("title-NFL");
+  // nflTitle.style.display = "none";
+  // canvas.show();
+  // opponentsArray = [
+  //   { img: opponent1, y: random(80, 500), x: width - 70, w: 50, h: 50 },
+  //   { img: opponent2, y: random(80, 500), x: width - 70, w: 50, h: 50 },
+  //   { img: opponent3, y: random(80, 500), x: width - 70, w: 50, h: 50 },
+  //   { img: opponent4, y: random(80, 500), x: width - 70, w: 50, h: 50 },
+  // ];
+  // Loop();
 }
 
 function preload() {
@@ -52,10 +88,11 @@ function preload() {
   opponent2 = loadImage("/assets/images/opponent2.gif");
   opponent3 = loadImage("/assets/images/opponent3.gif");
   opponent4 = loadImage("/assets/images/opponent4.gif");
-  // Opponent = loadImage("/assets/images/opponent1.gif");
-  introSound = createAudio("/assets/sounds/introSound.wav")
+  introSound = createAudio("/assets/sounds/introSound.wav");
   inGameSound = createAudio("/assets/sounds/inGameSound.wav");
   gameOverSound = createAudio("/assets/sounds/GameOverSound.wav");
+  collisionSound = createAudio("/assets/sounds/collisionSound.wav");
+  matchpointSound = createAudio("/assets/sounds/matchpointSound.wav");
 }
 
 function setup() {
@@ -67,78 +104,46 @@ function setup() {
   };
   document.getElementById("restart-button").onclick = () => {
     gameOver.style.display = "none";
-
     startGame();
-  };
-}
+ }
+} 
 
 function collideOpponents() {
   for (let i = 0; i < opponentsArray.length; i++) {
-    opponentsArray[i].y +=5;
     if (
       player.x < opponentsArray[i].x + opponentsArray[i].w &&
       player.x + player.w > opponentsArray[i].x &&
       player.y < opponentsArray[i].y + opponentsArray[i].h &&
       player.y + player.h > opponentsArray[i].y
-    );
-  }
-  healthBar -= 0.1;
-  return false;
-}
-
-function touchDown(){
-  if(player.x > 900) {
-     score++;
-     opponentsArray = [];
-     player.x = 0;
-     healthBar += 30;
-  }
-}
-
-function draw() {
-  image(backgroundImage, 0, 0, width, height);
-  image(player.img, player.x, player.y, 50, 50);
-  textSize(20);
-  fill(0, 200, 0);
-  text(`Score: ${highScore}`, 580, 50);
-
-  strokeWeight(0);
-  fill(0, 200, 0);
-  rect(20, 20, healthBar, 20);
-  if (frameCount % 120 === 0) {
-    opponentsArray.push({ img: opponent1, y: random(80, 900), x: width - 70, w: 50, h: 50 });
-    opponentsArray.push({ img: opponent2, y: random(80, 900), x: width - 70, w: 50, h: 50 });
-    opponentsArray.push({ img: opponent3, y: random(80, 900), x: width - 70, w: 50, h: 50 });
-    opponentsArray.push({ img: opponent4, y: random(80, 900), x: width - 70, w: 50, h: 50 });
-  }
-  for (let i = opponentsArray.length - 1; i > 0; i--) {
-    image(
-      opponentsArray[i].img,
-      opponentsArray[i].x,
-      opponentsArray[i].y,
-      opponentsArray[i].w,
-      opponentsArray[i].h
-    );
-    opponentsArray[i].x -=2;
-    if (opponentsArray[i].x < 1) {
-      opponentsArray.splice
+    ) {
+      healthBar -= 0.3; // set to 0.3
+      collisionSound.play();
+      return true;
     }
   }
-  //this is needed when the player dies
-  let mainScreen = document.getElementById("game-over");
-  mainScreen.style.display = "none";
+}
 
-  if (playerGoingRight) {
-    player.x += 4;
-  }
-  if (playerGoingLeft) {
-    player.x -= 4;
-  }
-  if (playerGoingUp) {
-    player.y -= 4;
-  }
-  if (playerGoingDown) {
-    player.y += 4;
+function touchDown() {
+  // for (let i = opponentsArray.length - 1; i > 0; i--) {
+  //   image(
+  //     opponentsArray[i].img,
+  //     opponentsArray[i].x,
+  //     opponentsArray[i].y,
+  //     opponentsArray[i].w,
+  //     opponentsArray[i].h
+  //   );
+  //   opponentsArray[i].x -= 1; // higher the number the faster they come
+  //   if (opponentsArray[i].x < 1) {
+  //     opponentsArray.splice;
+  //   }
+  // }
+  if (player.x >= 2600) {
+    // (woohSound.play())
+    score++;
+    // opponentsArray[i].x how to increase difficulty in case? 
+    opponentsArray = [];
+    player.x = 0;
+    healthBar += 1; //set to 1 if the game will get harder
   }
 }
 
@@ -164,15 +169,100 @@ function keyReleased() {
   playerGoingUp = false;
 }
 
+function matchPoint() {
+  if (score >= 1 ) { //set this to 5 points
+    canvas.hide();
+    noLoop();
+    gameWinnerScreen.style.display = "block";
+    document.getElementById("score").innerText = score;
+    inGameSound.stop();
+    matchpointSound.play();
+  }
+}
+
 function gameOver() {
-  inGameSound.stop();
-  gameOverSound.play();
-  let gameOverScreen = document.getElementById("game-over");
-  gameOverScreen.style.display = "none";
-  document.getElementById("restart-button").onclick = () => {
-    gameOver.style.display = "none";
-  };
-  if (healthBar <= 0 || collideOpponents() == true){
-    gameOverSound.play()
-  };
+  if (healthBar <= 0) {
+    canvas.hide();
+    noLoop();
+    gameOverScreen.style.display = "block";
+    document.getElementById("score").innerText = score;
+    inGameSound.stop();
+    gameOverSound.play();
+  }
+}
+
+function draw() {
+  image(backgroundImage, 0, 0, width, height);
+  image(player.img, player.x, player.y, 50, 50);
+  textSize(20);
+  fill(0, 200, 0);
+  text(`Score: ${score}`, 580, 50);
+  if (healthBar <= 0 || collideOpponents()) {
+    gameOver();
+  }
+  strokeWeight(0);
+  fill(0, 200, 0);
+  rect(20, 20, healthBar, 20);
+  if (frameCount % 120 === 0) {
+    opponentsArray.push({
+      img: opponent1,
+      y: random(80, 900),
+      x: width - 50,
+      w: 50,
+      h: 50,
+    });
+    opponentsArray.push({
+      img: opponent2,
+      y: random(80, 900),
+      x: width - 50,
+      w: 50,
+      h: 50,
+    });
+    opponentsArray.push({
+      img: opponent3,
+      y: random(80, 900),
+      x: width - 50,
+      w: 50,
+      h: 50,
+    });
+    opponentsArray.push({
+      img: opponent4,
+      y: random(80, 900),
+      x: width - 50,
+      w: 50,
+      h: 50,
+    });
+  }
+  for (let i = opponentsArray.length - 1; i > 0; i--) {
+    image(
+      opponentsArray[i].img,
+      opponentsArray[i].x,
+      opponentsArray[i].y,
+      opponentsArray[i].w,
+      opponentsArray[i].h
+    );
+    opponentsArray[i].x -= 1; // higher the number the faster they come
+    if (opponentsArray[i].x < 1) {
+      opponentsArray.splice;
+    }
+  }
+  let mainScreen = document.getElementById("game-over");
+  mainScreen.style.display = "none";
+  collideOpponents();
+  touchDown();
+  matchPoint();
+  gameOver();
+  restartGame();
+  if (playerGoingRight) {
+    player.x += 4;
+  }
+  if (playerGoingLeft) {
+    player.x -= 4;
+  }
+  if (playerGoingUp) {
+    player.y -= 4;
+  }
+  if (playerGoingDown) {
+    player.y += 4;
+  }
 }
